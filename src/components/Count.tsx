@@ -1,11 +1,12 @@
-import React from "react";
-import { useRecoilValue } from "recoil";
-import { charCountState } from "../recoil/atom";
+export {};
+// import React from "react";
+// import { useRecoilValue } from "recoil";
+// import { charCountState } from "../recoil/atom";
 
-const Count = () => {
-  const count = useRecoilValue(charCountState);
+// const Count = () => {
+//   const count = useRecoilValue(charCountState);
 
-  return <div>count : {count}</div>;
-};
+//   return <div>count : {count}</div>;
+// };
 
-export default Count;
+// export default Count;
