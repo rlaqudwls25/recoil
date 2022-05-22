@@ -5,8 +5,6 @@ import { todoListState } from "../recoil/atom";
 const TodoItem = ({ item }: any) => {
   const [todoList, setTodoList] = useRecoilState(todoListState);
 
-  //   console.log("todoList", todoList);
-
   const updateTodo = ({ target: { value } }: any) => {
     setTodoList((todoList) => {
       const updateIndex = todoList.findIndex((list) => list.id === item.id);

@@ -1,24 +1,4 @@
 import { atom, selector } from "recoil";
-
-// Atom은 state의 일부를 나타낸다.
-// Atom은 어떤 컴포넌트에서나 읽고 쓸 수 있다.
-// Atom을 구독하는 모든 컴포넌트들이 재 렌더링 된다.
-// export const textState = atom({
-//   key: "textState",
-//   default: "",
-// });
-
-// Selector는 상태의 변화다.
-
-// export const charCountState = selector({
-//   key: "charCountState",
-//   get: ({ get }) => {
-//     const text = get(textState);
-
-//     return text.length;
-//   },
-// });
-
 export interface ITodoTypes {
   id: number;
   todo: string;
@@ -28,4 +8,45 @@ export interface ITodoTypes {
 export const todoListState = atom<ITodoTypes[]>({
   key: "todoListState",
   default: [],
+});
+
+export const todoListFilterState = atom({
+  key: "todoListFilterState",
+  default: "Show All",
+});
+
+export const filteredTodoListState = selector({
+  key: "filteredeTodoListState",
+  get: ({ get }) => {
+    const filter = get(todoListFilterState);
+    const list = get(todoListState);
+
+    switch (filter) {
+      case "Show Completed":
+        return list.filter((item) => item.isComplete);
+      case "Show Uncompleted":
+        return list.filter((item) => !item.isComplete);
+      default:
+        return list;
+    }
+  },
+});
+
+export const todoListStatusState = selector({
+  key: "todoListStatusState",
+  get: ({ get }) => {
+    const todoList = get(todoListState);
+    const totalList = todoList.length;
+    const totalCompletedNum = todoList.filter((item) => item.isComplete).length;
+    const totalUncompletedNum = totalList - totalCompletedNum;
+    const percentCompleted =
+      totalList === 0 ? 0 : totalCompletedNum / totalList;
+
+    return {
+      totalList,
+      totalCompletedNum,
+      totalUncompletedNum,
+      percentCompleted,
+    };
+  },
 });
